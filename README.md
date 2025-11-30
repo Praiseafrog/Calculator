@@ -1,5 +1,7 @@
 Created without AI
 
+Requirements: Python 3 with the tkinter library
+
 Created on my own utilizing doubly-linked lists, which I also implemented myself.
 Supports addition (+), subtraction (-), multiplication (*), and division (/), as well as allowing the minus and plus signs to be used for negative/positive numbers
 
