@@ -7,4 +7,4 @@ Supports addition (+), subtraction (-), multiplication (*), and division (/), as
 
 I heard making a calculator was a pretty standard practice for those learning computer science. I was not aware that it would be this hard. (still fun though)
 
-To do: Add support for decimal values and parentheses.
+To do: Add support for decimal values and parentheses as well as robust error handling.
