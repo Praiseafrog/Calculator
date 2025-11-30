@@ -69,9 +69,7 @@ def calculate(text: str):
 
 def evaluate(head:dl.Node) -> str:
 
-    node = evaluate_parentheses(head)
-
-    node = evaluate_signs(node)
+    node = evaluate_signs(head)
     print(f"converted signs to: {node}")
 
     num:float = evaluate_operators(head).data
@@ -80,12 +78,7 @@ def evaluate(head:dl.Node) -> str:
     return str(num)
 
 def evaluate_parentheses(head : dl.Node) -> dl.Node:
-    node = head
-    while True:
-
-        if node.data == "(":
-            print('hesl')
-
+    pass #TODO: implement parenthetical evaluation using recursion
 
 def evaluate_signs(head : dl.Node) -> dl.Node:
     
