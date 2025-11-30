@@ -14,7 +14,10 @@ label.pack()
 def key_pressed(event):
     match event.keysym:
         case "Return":
-            label.config(text = calc.calculate(text_area.get()))
+            try:
+                label.config(text = calc.calculate(text_area.get()))
+            except Exception as e:
+                label.config(text = f"Error: {e}")
         case "Escape":
             master.destroy()
         case x:
