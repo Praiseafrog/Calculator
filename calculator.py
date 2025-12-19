@@ -71,16 +71,30 @@ def calculate(text: str):
     return evaluate(head)
 
 def evaluate(head:dl.Node) -> float:
+    node = head
     
-    evaluate_parentheses(head)
+    while check_parentheses(head):
+        node = evaluate_parentheses(node)
 
-    node = evaluate_signs(head)
+    node = evaluate_signs(node)
     print(f"converted signs to: {node}")
 
-    num:float = evaluate_operators(head).data
+    num:float = evaluate_operators(node).data
     
     assert type(num) == float
     return num
+
+def check_parentheses(head:dl.Node) -> bool:
+    node = head
+    while node:
+        if node.data == "(":
+            return True
+
+        node = node.next
+
+    return False
+
+    
 
 def evaluate_parentheses(head : dl.Node) -> dl.Node:
     temp = head.deepcopy()
@@ -137,6 +151,8 @@ def evaluate_parentheses(head : dl.Node) -> dl.Node:
         l.next.pre = l
     except:
         l.next = None
+    
+    return head
 
 
 def evaluate_signs(head : dl.Node) -> dl.Node:
