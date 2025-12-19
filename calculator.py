@@ -135,6 +135,8 @@ def evaluate_parentheses(head : dl.Node) -> dl.Node:
 
         
         if node.data == ")":
+            if node.next and type(node.next.data) == float:
+                node.insert(Operator("*"))
             count -= 1
             if count == 0:
                 r = node
