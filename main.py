@@ -20,8 +20,6 @@ def key_pressed(event):
                 label.config(text = f"Error: {e}")
         case "Escape":
             master.destroy()
-        case x:
-            print("pressed key " + x)
 
 master.bind("<Key>", key_pressed)
 master.mainloop()

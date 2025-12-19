@@ -100,14 +100,12 @@ def check_parentheses(head:dl.Node) -> bool:
 def evaluate_parentheses(head : dl.Node) -> dl.Node:
     temp = head.deepcopy()
     count = 0
-    parentheses = False
 
-    while temp != None:
+    while temp != None: #iterates through a copy of the list to trim only whats inside parentheses
 
         if temp.data == "(":
             count += 1
             if count == 1:
-                parentheses = True
                 temp = temp.next
                 temp.pre = None
                 continue
@@ -125,13 +123,12 @@ def evaluate_parentheses(head : dl.Node) -> dl.Node:
         else:
             break
     
-    if parentheses == False:
-        return head
-    
     node = head
-    while node != None:
+    while node != None: #iterates through the actual list to find where to paste the evaluated segment
 
         if node.data == "(":
+            if node.pre and type(node.pre.data) == float:
+                node.pre.insert(Operator("*"))
             count += 1
             if count == 1:
                 l = node
@@ -215,7 +212,7 @@ def tokenize(text:str) -> dl.Node:
 
         if char in digits or char == ".":
             if char == ".":
-                assert "." not in currnum, "mulitple decimals in one float"
+                assert "." not in currnum, "multiple decimals in one number"
             currnum += char
             continue 
         elif char in signs + operators + parentheticals:
