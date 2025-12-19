@@ -71,6 +71,7 @@ def calculate(text: str):
     return evaluate(head)
 
 def evaluate(head:dl.Node) -> float:
+    print(f"evaluating {head}")
     node = head
     
     while check_parentheses(head):
@@ -212,7 +213,9 @@ def tokenize(text:str) -> dl.Node:
 
     for char in text:
 
-        if char in digits:
+        if char in digits or char == ".":
+            if char == ".":
+                assert "." not in currnum, "mulitple decimals in one float"
             currnum += char
             continue 
         elif char in signs + operators + parentheticals:
