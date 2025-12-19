@@ -8,9 +8,7 @@ class Node:
         self.data = data
     
     def __repr__(self) -> str:
-        n = self
-        while n.pre != None:
-            n = n.pre
+        n = self.get_head()
         a = ""
         while n != None:
             a += str(n.data)
@@ -64,6 +62,12 @@ class Node:
             new = new.next
             node = node.next
         return new.get_head()
+    
+    def deepprint(self) -> None:
+        node = self.get_head()
+        while node != None:
+            print(node)
+            node = node.next
 
 
         

@@ -60,6 +60,9 @@ class Sign:
         if type(tok1) is float:
             node.insert(Operator("+")) #optional middle object (only if object before was not an operator and thus this should be treated as addition)
         
+        if node.data == None:
+            node = node.next
+        
         return node
 
 def calculate(text: str):
@@ -67,18 +70,74 @@ def calculate(text: str):
     print(f"tokenized to: {head}")
     return evaluate(head)
 
-def evaluate(head:dl.Node) -> str:
+def evaluate(head:dl.Node) -> float:
+    
+    evaluate_parentheses(head)
 
     node = evaluate_signs(head)
     print(f"converted signs to: {node}")
 
     num:float = evaluate_operators(head).data
-    if num.is_integer(): num = int(num)
-
-    return str(num)
+    
+    assert type(num) == float
+    return num
 
 def evaluate_parentheses(head : dl.Node) -> dl.Node:
-    pass #TODO: implement parenthetical evaluation using recursion
+    temp = head.deepcopy()
+    count = 0
+    parentheses = False
+
+    while temp != None:
+
+        if temp.data == "(":
+            count += 1
+            if count == 1:
+                parentheses = True
+                temp = temp.next
+                temp.pre = None
+                continue
+
+        
+        if temp.data == ")":
+            count -= 1
+            if count == 0:
+                temp = temp.pre
+                temp.next = None
+                break
+        
+        if temp.next != None:
+            temp = temp.next
+        else:
+            break
+    
+    if parentheses == False:
+        return head
+    
+    node = head
+    while node != None:
+
+        if node.data == "(":
+            count += 1
+            if count == 1:
+                l = node
+
+        
+        if node.data == ")":
+            count -= 1
+            if count == 0:
+                r = node
+                break
+        
+        node = node.next
+
+    solved = evaluate(temp.get_head())
+    l.data = solved
+    try:
+        l.next = r.next
+        l.next.pre = l
+    except:
+        l.next = None
+
 
 def evaluate_signs(head : dl.Node) -> dl.Node:
     
@@ -157,7 +216,8 @@ def tokenize(text:str) -> dl.Node:
             currnode = currnode.next
         
         elif char in parentheticals:
-            continue
+            currnode.insert(char)
+            currnode = currnode.next
     
     if currnum != "":
         currnode.insert(float(currnum))
@@ -166,4 +226,4 @@ def tokenize(text:str) -> dl.Node:
     return head.next
 
 if __name__ == "__main__":
-    print("ANSWER: " + calculate(input()))
+    print("ANSWER:" , calculate(input()))
